@@ -1,7 +1,23 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
 #map {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+}
+#control {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 30%;
+  width: 40%;
+  background-color:rgba(170, 170, 170, 0.7);
+  border-radius: 0 20px 0 0;
+}
+#control-header {
+  margin-left: 10px;
+  color: white;
 }
