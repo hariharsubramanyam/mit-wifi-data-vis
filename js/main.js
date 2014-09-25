@@ -4,12 +4,23 @@
   var time_min;
   var go_to_time_button;
   var animate_button;
+  var data_accessor = null;
 
   var am_pm_handler = function() {
     if (am_pm.text() == "PM") {
       am_pm.text("AM");
     } else {
       am_pm.text("PM");
+    }
+  };
+
+  var go_to_time_handler = function() {
+    var hr = Number(time_hr.text());
+    var min = Number(time_min.text());
+    var am_pm_string = am_pm.text();
+    if (data_accessor !== null) {
+      var data = data_accessor.data_for_time(hr, min, am_pm_string);
+      console.log(data);
     }
   };
 
@@ -21,6 +32,11 @@
     animate_button = $("#animate");
 
     am_pm.click(am_pm_handler);
+    go_to_time_button.click(go_to_time_handler);
+
+    $.get("util/output.csv", function(data) {
+      data_accessor = Global.DataAccessor(data);
+    });
 
     var map = L.map('map').setView([42.360183,-71.090469], 17);
 
