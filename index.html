@@ -11,13 +11,13 @@
     <div id="control">
       <h1 id="control-header">Select a timespan</h1>
       <div id="time-div">
-        <input type="text" id="time-hr" maxLength="2" class="digital-font time-input">
+        <input type="text" id="time-hr" maxLength="2" class="digital-font time-input" value="12">
         <span class="digital-font">:</span>
-        <input type="text" id="time-min" maxLength="2" class="digital-font time-input">
-        <button type="text" id="am-pm" class="digital-font">PM</button>
+        <input type="text" id="time-min" maxLength="2" class="digital-font time-input" value="00">
+        <button id="am-pm" class="digital-font">PM</button>
       </div>
       <button id="go-to-time" class="pretty-button">Jump To Time</button>
-      <button class="pretty-button">Animate</button>
+      <button id="animate" class="pretty-button">Animate</button>
     </div>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/leaflet/dist/leaflet.js"></script>
