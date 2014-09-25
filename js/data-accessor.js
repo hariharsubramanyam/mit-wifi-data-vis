@@ -10,10 +10,10 @@
     var num_connected;
     for (var i = 0; i < lines.length; i++) {
       tuple = lines[i].split(",");
-      timestamp = Number(tuple[0]);
-      lat = Number(tuple[1]);
-      lon = Number(tuple[2]);
-      num_connected = Number(tuple[3]);
+      timestamp = parseInt(tuple[0], 10);
+      lat = parseInt(tuple[1], 10);
+      lon = parseInt(tuple[2], 10);
+      num_connected = parseInt(tuple[3], 10);
 
       if (!data_for_timestamp.hasOwnProperty(timestamp)) {
         data_for_timestamp[timestamp] = [];
@@ -31,8 +31,6 @@
     }
 
     var data_for_time = function(hr, min, am_pm) {
-      console.log(hr);
-      console.log(min);
       hr = parseInt(hr, 10);
       min = parseInt(min, 10);
       if (hr == 12) {
