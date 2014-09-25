@@ -30,7 +30,7 @@
       if (!circle_for_lat_lon.hasOwnProperty([lat, lon])) {
         circle_for_lat_lon[[lat, lon]] = L.circle([lat, lon], 100).addTo(map);
       }
-      circle_for_lat_lon[[lat, lon]].setRadius(num_connected * 2);
+      circle_for_lat_lon[[lat, lon]].setRadius(num_connected);
     }
   }; 
 
@@ -52,7 +52,7 @@
       var hr = parseInt(time_hr.val(), 10);
       var min = parseInt(time_min.val(), 10);
       var am_pm_string = am_pm.text();
-      min += 5;
+      min += 1;
       if (min >= 60) {
         min = min % 60;
         if (hr === 11 && am_pm_string === "PM") {
@@ -74,7 +74,7 @@
       time_min.val(min);
       am_pm.text(am_pm_string);
       go_to_time_handler(hr, min, am_pm_string);
-    }, 100);
+    }, 1000);
   };
 
   var pad_string = function(s) {
@@ -115,7 +115,7 @@
     go_to_time_button.click(go_to_time_handler);
     animate_button.click(animate_handler);
 
-    $.get("util/output.csv", function(data) {
+    $.get("util/data.csv", function(data) {
       data_accessor = Global.DataAccessor(data);
     });
 
