@@ -31,6 +31,8 @@
     }
 
     var data_for_time = function(hr, min, am_pm) {
+      console.log(hr);
+      console.log(min);
       hr = parseInt(hr, 10);
       min = parseInt(min, 10);
       if (hr == 12) {

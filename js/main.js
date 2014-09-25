@@ -35,6 +35,18 @@
   }; 
 
   var animate_handler = function() {
+    if (animate_button.text() === "Stop") {
+      clearInterval(animate_inverval);
+      animate_button.text("Animate");
+      go_to_time_button.removeClass("disabled");
+      go_to_time_button.prop("disabled", false);
+      animate_button.removeClass("red");
+      return;
+    }
+    go_to_time_button.addClass("disabled");
+    go_to_time_button.prop("disabled", true);
+    animate_button.addClass("red");
+    animate_button.text("Stop");
     clearInterval(animate_inverval);
     animate_inverval = setInterval(function() {
       var hr = parseInt(time_hr.val(), 10);
@@ -80,7 +92,7 @@
     var hr = hour;
     var min = minute;
     var am_pm_string = am_or_pm;
-    if (hour === undefined) {
+    if (am_or_pm === undefined) {
       hr = Number(time_hr.val());
       min = Number(time_min.val());
       am_pm_string = am_pm.text();
