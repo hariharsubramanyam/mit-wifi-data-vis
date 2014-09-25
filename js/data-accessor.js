@@ -1,8 +1,8 @@
 (function() {
   var DataAccessor = function(csv_data) {
     var lines = csv_data.split("\n");
-    var data = 0;
-    var data_for_timestamp = {};
+    var access_data = [];
+    var ind = -1;
 
     var tuple;
     var timestamp;
@@ -21,27 +21,30 @@
       timestamp *= 1000;
       timestamp = new Date(timestamp);
       timestamp = timestamp.getHours() * 60 + timestamp.getMinutes();
+
       if (isNaN(timestamp)) {
         continue;
       }
 
-      if (!data_for_timestamp.hasOwnProperty(timestamp)) {
-        data_for_timestamp[timestamp] = [];
+      if (ind < 0 || access_data[ind] === undefined || access_data[ind].timestamp !== timestamp) {
+        ind++;
+        access_data[ind] = {
+          "timestamp": timestamp,
+          "accesses": {}
+        };
       }
-
-      if (isNaN(num_connected)) {
-        continue;
-      }
-
-      data_for_timestamp[timestamp].push({
-        "lat": lat,
-        "lon": lon,
-        "num_connected": num_connected
-      });
+      access_data[ind].accesses[[lat, lon]] = num_connected;
     }
-    console.log(data_for_timestamp);
 
-    var data_for_time = function(hr, min, am_pm) {
+
+    var data_for_index = function(index) {
+      return {
+        "data": access_data[index],
+        "new_index": Math.min(index + 1,access_data.length - 1)
+      };
+    };
+
+    var index_for_time = function(hr, min, am_pm) {
       hr = parseInt(hr, 10);
       min = parseInt(min, 10);
       if (hr == 12) {
@@ -51,12 +54,16 @@
         hr += 12;
       }
       var timestamp = hr * 60 + min;
-      console.log(timestamp);
-      return data_for_timestamp[timestamp];
+      for (var i = 0; i < access_data.length; i++) {
+        if (access_data[i].timestamp >= timestamp) {
+          return i;
+        }
+      }
     };
 
     var that = {};
-    that.data_for_time = data_for_time;
+    that.index_for_time = index_for_time;
+    that.data_for_index = data_for_index;
     return that;
   };
 

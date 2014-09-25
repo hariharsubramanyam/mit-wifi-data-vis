@@ -22,11 +22,11 @@
     var lat;
     var lon;
     var num_connected;
-    for (var i = 0; i < access_data.length; i++) {
-      wifi_point = access_data[i];
-      lat = wifi_point.lat;
-      lon = wifi_point.lon;
-      num_connected = wifi_point.num_connected;
+    for (var k in access_data) {
+      wifi_point = k.split(",");
+      lat = parseFloat(wifi_point[0]); 
+      lon = parseFloat(wifi_point[1]);
+      num_connected = access_data[k];
       if (!circle_for_lat_lon.hasOwnProperty([lat, lon])) {
         circle_for_lat_lon[[lat, lon]] = L.circle([lat, lon], 100).addTo(map);
       }
@@ -43,38 +43,39 @@
       animate_button.removeClass("red");
       return;
     }
+    var data = go_to_time_handler();
+    var timestamp;
+    var index;
+    var hr;
+    var min;
+    var am_or_pm;
+
     go_to_time_button.addClass("disabled");
     go_to_time_button.prop("disabled", true);
     animate_button.addClass("red");
     animate_button.text("Stop");
     clearInterval(animate_inverval);
     animate_inverval = setInterval(function() {
-      var hr = parseInt(time_hr.val(), 10);
-      var min = parseInt(time_min.val(), 10);
-      var am_pm_string = am_pm.text();
-      min += 1;
-      if (min >= 60) {
-        min = min % 60;
-        if (hr === 11 && am_pm_string === "PM") {
-          hr = 11;
-          min = 59;
-          am_pm_string = "PM";
-          clearInterval(animate_inverval);
-        } else {
-          hr += 1;
-          if (hr > 12) {
-            hr = 1;
-            am_pm_string = "PM";
-          }
-        }
+      index = data.new_index;
+      data = data_accessor.data_for_index(index);
+      timestamp = data.data.timestamp;
+      hr = Math.floor(timestamp / 24);
+      min = timestamp % 60;
+      if (hr > 11) {
+        am_or_pm = "PM";
+        hr -= 12;
+      } else {
+        am_or_pm = "AM";
       }
-      min = pad_string(min);
-      hr = pad_string(hr);
-      time_hr.val(hr);
-      time_min.val(min);
-      am_pm.text(am_pm_string);
-      go_to_time_handler(hr, min, am_pm_string);
-    }, 1000);
+      if (hr == 0) {
+        hr = 12;
+      }
+      am_pm.text(am_or_pm);
+      time_hr.val(pad_string(hr));
+      time_min.val(pad_string(min));
+
+      draw_circles_for_data(data.data.accesses);
+    }, 100);
   };
 
   var pad_string = function(s) {
@@ -93,14 +94,18 @@
     var min = minute;
     var am_pm_string = am_or_pm;
     if (am_or_pm === undefined) {
-      hr = Number(time_hr.val());
-      min = Number(time_min.val());
+      hr = parseInt(time_hr.val(), 10);
+      min = parseInt(time_min.val(), 10);
       am_pm_string = am_pm.text();
     }
     if (data_accessor !== null) {
-      var access_data = data_accessor.data_for_time(hr, min, am_pm_string);
-      draw_circles_for_data(access_data);
+      var index = data_accessor.index_for_time(hr, min, am_pm_string);
+      var data = data_accessor.data_for_index(index);
+      console.log(data);
+      draw_circles_for_data(data.data.accesses);
+      return data;
     }
+    return null;
   };
 
 
