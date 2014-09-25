@@ -1,3 +1,6 @@
+# Demo
+
+Go to [wifi.firebaseapp.com](http://wifi.firebaseapp.com).
 # Usage
 
 1. Launch an HTTP Server to serve static files in this directory: `python -m SimpleHTTPServer`
