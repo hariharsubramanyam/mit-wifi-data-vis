@@ -1,7 +1,6 @@
 (function() {
   var DataAccessor = function(csv_data) {
     var lines = csv_data.split("\n");
-    console.log(lines);
     var data_for_timestamp = {};
 
     var tuple;
@@ -32,11 +31,15 @@
     }
 
     var data_for_time = function(hr, min, am_pm) {
+      if (hr == 12) {
+        hr = 0;
+      }
       if (am_pm == 'PM') {
         hr += 12;
       }
-      min = Math.round(min / 5) * 5;
+      min = Math.floor(min / 5) * 5;
       var timestamp = hr * 60 + min;
+      console.log(timestamp);
       return data_for_timestamp[timestamp];
     };
 
