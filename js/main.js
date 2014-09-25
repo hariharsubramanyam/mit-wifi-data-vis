@@ -30,7 +30,7 @@
       if (!circle_for_lat_lon.hasOwnProperty([lat, lon])) {
         circle_for_lat_lon[[lat, lon]] = L.circle([lat, lon], 100).addTo(map);
       }
-      circle_for_lat_lon[[lat, lon]].setRadius(num_connected);
+      circle_for_lat_lon[[lat, lon]].setRadius(num_connected / 2);
     }
   }; 
 
