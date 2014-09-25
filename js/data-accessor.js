@@ -31,6 +31,8 @@
     }
 
     var data_for_time = function(hr, min, am_pm) {
+      hr = parseInt(hr, 10);
+      min = parseInt(min, 10);
       if (hr == 12) {
         hr = 0;
       }
@@ -39,7 +41,6 @@
       }
       min = Math.floor(min / 5) * 5;
       var timestamp = hr * 60 + min;
-      console.log(timestamp);
       return data_for_timestamp[timestamp];
     };
 
