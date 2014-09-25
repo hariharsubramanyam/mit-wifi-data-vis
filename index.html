@@ -2,15 +2,26 @@
 <html>
   <head>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
     <div id="map"></div>
     <div id="control">
-      <h1 id="control-header">Select a timespan:</h1>
+      <h1 id="control-header">Select a timespan</h1>
+      <div id="time-div">
+        <input type="text" id="time-hr" maxLength="2" class="digital-font time-input">
+        <span class="digital-font">:</span>
+        <input type="text" id="time-min" maxLength="2" class="digital-font time-input">
+        <button type="text" id="am-pm" class="digital-font">PM</button>
+      </div>
+      <button id="go-to-time" class="pretty-button">Jump To</button>
+      <button class="pretty-button">Animate</button>
     </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/leaflet/dist/leaflet.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
+

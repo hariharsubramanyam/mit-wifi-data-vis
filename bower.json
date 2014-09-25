@@ -2,6 +2,7 @@
   "name": "leaflet-test",
   "version": "1.0.0",
   "dependencies": {
-    "leaflet": "*"
+    "leaflet": "*",
+    "jquery": "~2.1.1"
   }
 }
